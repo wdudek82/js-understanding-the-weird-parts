@@ -56,7 +56,7 @@
     },
     log: function() {
       if (console) {
-        console.log(logMessages[this.language] + ': ' + this.fullName);
+        console.log(logMessages[this.language] + ': ' + this.fullName());
       }
 
       return this;
@@ -64,6 +64,25 @@
     setLang: function(lang) {
       this.language = lang;
       this.validate();
+
+      return this;
+    },
+    HTMLGreeting: function(selector, formal) {
+      if (!$) {
+        throw 'jQuery not loaded!';
+      }
+      if (!selector) {
+        throw 'Missing jQuery selector!';
+      }
+
+      let msg;
+      if (formal) {
+        msg = this.formalGreeting();
+      } else {
+        msg = this.greeting();
+      }
+
+      $(selector).html(msg);
 
       return this;
     }
